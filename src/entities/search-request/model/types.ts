@@ -24,4 +24,5 @@ export interface SearchRequest {
     districts: District;
     services: Dictionary[];
     conditions: Dictionary[];
+    expiresAt?: string;
 }

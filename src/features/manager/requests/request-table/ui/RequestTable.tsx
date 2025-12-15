@@ -2,7 +2,7 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table"
 import { Button } from "@/shared/ui/button"
-import {formatDate} from "@/shared/lib/date/formateDate";
+import {formatDate, hoursLeft} from "@/shared/lib/date/formateDate";
 import {useGetRelevantRequests} from "@/features/manager/requests/request-table/model/api/useGetRelevantRequests";
 import {RequestStatusBadge} from "@/features/manager/requests/request-table/ui/RequestStatusBadge";
 import {Spinner} from "@/shared/ui/spinner";
@@ -58,6 +58,9 @@ export function RequestTable({id}:RequestTableProps) {
                             Статус
                         </div>
                     </TableHead>
+                    <TableHead>
+                        Актуален до
+                    </TableHead>
                     <TableHead>Действия</TableHead>
                 </TableRow>
             </TableHeader>
@@ -78,7 +81,9 @@ export function RequestTable({id}:RequestTableProps) {
                         <TableCell>
                             <RequestStatusBadge status={item.status} />
                         </TableCell>
-
+                        <TableCell className="text-left font-medium">
+                            {hoursLeft(item.expiresAt)}
+                        </TableCell>
                         <TableCell>
                             {handleSearchRequestStatus(item.price, item.status, item.id, id)}
                         </TableCell>

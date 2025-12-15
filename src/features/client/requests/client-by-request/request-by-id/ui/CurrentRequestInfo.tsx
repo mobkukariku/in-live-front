@@ -6,7 +6,7 @@ import {
 import {useGetSearchRequest} from "@/features/client/requests/client-by-request/request-by-id/model/api/useGetSearchRequest";
 import {Spinner} from "@/shared/ui/spinner";
 import {LabelTextInfo} from "@/shared/ui/label-text-info";
-import {CalendarIcon, EditIcon, StarIcon, UsersIcon} from "lucide-react";
+import {CalendarIcon, Clock, EditIcon, StarIcon, UsersIcon} from "lucide-react";
 import {TagList} from "@/shared/ui/TagList";
 import {Dictionary} from "@/entities/dictionary/model/types";
 import {
@@ -16,7 +16,7 @@ import {
     RemoveSearchRequestModal
 } from "@/features/client/requests/client-by-request/remove-request-price/ui/RemoveSearchRequestModal";
 import {PriceRequestList} from "@/features/client/requests/price-request/ui/PriceRequestList";
-import { formatDate } from "@/shared/lib/date/formateDate";
+import {formatDate, hoursLeft} from "@/shared/lib/date/formateDate";
 
 interface CurrentRequestInfoProps {
     requestId: number;
@@ -72,6 +72,13 @@ export function CurrentRequestInfo({requestId}:CurrentRequestInfoProps) {
                                 label={"Рейтинг"}
                                 value={`от ${data?.fromRating} до ${data?.toRating}`}
                             />
+                            {data?.expiresAt && (
+                                <LabelTextInfo
+                                    icon={<Clock width={18} height={18} className="sm:w-5 sm:h-5 text-red-500" />}
+                                    label="Актуален до"
+                                    value={hoursLeft(data?.expiresAt)}
+                                />
+                            )}
                         </div>
                         <TagList
                             title="Типы размещения:"

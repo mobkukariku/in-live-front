@@ -1,8 +1,8 @@
 import {LabelTextInfo} from "@/shared/ui/label-text-info";
-import {CalendarIcon, DollarSignIcon, Star, Users} from "lucide-react";
+import {CalendarIcon, Clock, DollarSignIcon, Star, Users} from "lucide-react";
 import {TagList} from "@/shared/ui/TagList";
 import {SearchRequest} from "@/entities/search-request/model/types";
-import { formatDate } from "@/shared/lib/date/formateDate";
+import {formatDate, hoursLeft} from "@/shared/lib/date/formateDate";
 
 interface RequestInfoProps {
     request: SearchRequest
@@ -42,6 +42,14 @@ export function RequestInfo({request}:RequestInfoProps) {
                     label="Рейтинг объекта"
                     value={`от ${request.fromRating} до ${request.toRating}`}
                 />
+
+                {request.expiresAt && (
+                    <LabelTextInfo
+                        icon={<Clock width={18} height={18} className="sm:w-5 sm:h-5 text-red-500" />}
+                        label="Действует до"
+                        value={hoursLeft(request.expiresAt)}
+                    />
+                )}
             </header>
 
             <hr className="my-4 sm:my-5 md:my-6" />
