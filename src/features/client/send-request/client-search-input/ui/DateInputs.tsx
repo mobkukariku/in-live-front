@@ -30,6 +30,14 @@ export function DateInputs({ value, onChange, error, oneNight = false }: DateInp
 
     const singleDate: Date | undefined = value?.from ? new Date(value.from) : undefined
 
+    const isDateDisabled = (date: Date) => {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        const dateToCheck = new Date(date)
+        dateToCheck.setHours(0, 0, 0, 0)
+        return dateToCheck < today
+    }
+
     const formatDateRange = () => {
         if (!value?.from) return "Выберите даты"
         if (oneNight || !value?.to) {
@@ -96,7 +104,7 @@ export function DateInputs({ value, onChange, error, oneNight = false }: DateInp
                             onSelect={handleSelectSingleDate}
                             numberOfMonths={1}
                             className="rounded-lg w-full"
-                            disabled={(date) => date < new Date()}
+                            disabled={isDateDisabled}
                         />
                     ) : (
                         <Calendar
@@ -106,7 +114,7 @@ export function DateInputs({ value, onChange, error, oneNight = false }: DateInp
                             onSelect={handleSelectDate}
                             numberOfMonths={2}
                             className="rounded-lg w-full"
-                            disabled={(date) => date < new Date()}
+                            disabled={isDateDisabled}
                         />
                     )}
                 </PopoverContent>
